@@ -6,11 +6,8 @@ import java.io.FileNotFoundException;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        //new MouseCoordinates().getMouseCoord();
-        //new MouseCoordinates().setMouseCoord(0,0);
+
         ConfigParser.load();
-        new WebcamManager().makeCapture();
-        new Bot().sendPhotoMessage();
 
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         ApiContextInitializer.init();
@@ -20,6 +17,17 @@ public class Main {
                 TelegramApiRequestException e) {
             e.printStackTrace();
         }
+
+        MouseCoordinates mouseCoordinates = new MouseCoordinates();
+
+        mouseCoordinates.setMouseCoord(0, 0);
+
+        System.out.println("I will waiting for rat");
+        while (mouseCoordinates.getMouseCoord() == 0) {
+        }
+
+        new WebcamManager().makeCapture();
+        new Bot().sendPhotoMessage();
     }
 
 }

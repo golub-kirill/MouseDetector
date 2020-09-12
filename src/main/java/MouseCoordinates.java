@@ -2,27 +2,29 @@ import java.awt.*;
 
 public class MouseCoordinates {
 
-     void getMouseCoord(){
-        PointerInfo pInfo = MouseInfo.getPointerInfo();
-        Point point = pInfo.getLocation();
+     int getMouseCoord() {
+         PointerInfo pInfo = MouseInfo.getPointerInfo();
+         Point point = pInfo.getLocation();
 
-        int xCoord = (int) point.getX();
-        int yCoord = (int) point.getY();
+         int xCoord = (int) point.getX();
+         int yCoord = (int) point.getY();
 
-        System.out.println("x =" + xCoord);
-        System.out.println("y =" + yCoord);
-    }
+         return xCoord + yCoord;
 
-    void setMouseCoord(int xSet, int ySet) {
+     }
+
+
+    void setMouseCoord(int xCoord, int yCoord) {
+
         Robot robot = null;
+
         try {
             robot = new Robot();
-            robot.mouseMove(xSet, ySet);
-
-            System.out.println("Mouse on zero coordinates");
         } catch (AWTException e) {
             e.printStackTrace();
         }
-
+        assert robot != null;
+        robot.mouseMove(xCoord, yCoord);
     }
+
 }

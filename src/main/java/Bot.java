@@ -7,15 +7,18 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Bot extends TelegramLongPollingBot {
     static long chatID;
     String messageText;
+    SendMessage sendMessage;
 
     public void onUpdateReceived(Update update) {
 
         chatID = update.getMessage().getChatId().intValue();
-        SendMessage sendMessage = new SendMessage().setChatId(chatID);
+        sendMessage = new SendMessage().setChatId(chatID);
         messageText = update.getMessage().getText();
 
         if (messageText != null && update.getMessage().hasText()) {
@@ -33,9 +36,16 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public void sendPhotoMessage() throws FileNotFoundException {
-        SendPhoto sendPhoto = new SendPhoto().setPhoto("rat", new FileInputStream(new File(ConfigParser.getFilePath()) + "\\rat.png")).setChatId(ConfigParser.getChatId());
+        sendMessage = new SendMessage()
+                .setText(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()))
+                .setChatId(ConfigParser.getChatId());
+        SendPhoto sendPhoto = new SendPhoto()
+                .setPhoto("rat", new FileInputStream(new File(ConfigParser.getFilePath()) + "\\rat.png"))
+                .setChatId(ConfigParser.getChatId());
         try {
+            execute(sendMessage);
             execute(sendPhoto);
+            System.out.println("Rat's photo is sending");
 
         } catch (TelegramApiException e) {
             e.printStackTrace();
