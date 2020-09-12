@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import java.io.FileNotFoundException;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 
         ConfigParser.load();
 
@@ -28,6 +28,9 @@ public class Main {
 
         new WebcamManager().makeCapture();
         new Bot().sendPhotoMessage();
+
+        Thread.sleep(500);
+        new MouseCoordinates().setMouseCoord(0, 0);
     }
 
 }
