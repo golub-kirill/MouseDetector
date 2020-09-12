@@ -9,6 +9,7 @@ public class ConfigParser {
 
     private static String BOT_NAME;
     private static String BOT_TOKEN;
+    private static String CHAT_ID;
     private static String FILE_PATH;
 
     public static void load() {
@@ -24,7 +25,9 @@ public class ConfigParser {
 
         setBotUserName(properties.getProperty("BotUserName"));
         setBotToken(properties.getProperty("BotToken"));
+        setChatId(properties.getProperty("ChatID"));
         setFilePath(properties.getProperty("FilePath"));
+
     }
 
     public static String getBotUserName() {
@@ -41,6 +44,14 @@ public class ConfigParser {
 
     public static void setBotToken(String botToken) {
         BOT_TOKEN = botToken;
+    }
+
+    public static String getChatId() {
+        return CHAT_ID;
+    }
+
+    public static void setChatId(String chatId) {
+        CHAT_ID = chatId;
     }
 
     public static String getFilePath() {

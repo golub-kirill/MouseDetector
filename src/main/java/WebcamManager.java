@@ -5,15 +5,11 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class WebcamManager {
 
     void makeCapture () {
-
-        String timeStamp = new SimpleDateFormat("d MMMyyyy - ").format(Calendar.getInstance().getTime());
-        String filePath = (ConfigParser.getFilePath()+timeStamp);
 
         Webcam webcam = Webcam.getDefault();
         webcam.setViewSize(new Dimension(640, 480));
@@ -23,11 +19,14 @@ public class WebcamManager {
         }
 
         try {
-            for (int i = 0; i < 3; i++)
-            {
-                ImageIO.write(webcam.getImage(),"PNG", new File(filePath + i + ".png"));
-                System.out.println("Saved image "+filePath + i + ".png");
+            File photoDir = new File(ConfigParser.getFilePath());
+            if (!photoDir.exists()) {
+                photoDir.mkdirs();
+                System.out.println("Folder \"" + ConfigParser.getFilePath() + "\"" + " is created.");
             }
+            ImageIO.write(webcam.getImage(), "PNG", new File(ConfigParser.getFilePath() + "rat.png"));
+            System.out.println("Saved image " + ConfigParser.getFilePath() + "rat.png");
+
         } catch (IOException e) {
             throw new WebcamException(e);
         }
